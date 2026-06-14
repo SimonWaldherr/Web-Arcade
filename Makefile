@@ -29,7 +29,7 @@ lint-html:
 	@$(NODE) -e 'const fs=require("fs"); let failed=false; for (const f of process.argv.slice(1)) { const html=fs.readFileSync(f,"utf8"); const lower=html.toLowerCase(); const checks=[[/<!doctype html>/,"missing <!doctype html>"],[/<html[\s>]/,"missing <html>"],[/<\/html>/,"missing </html>"],[/<head[\s>]/,"missing <head>"],[/<\/head>/,"missing </head>"],[/<body[\s>]/,"missing <body>"],[/<\/body>/,"missing </body>"],[/<title>[\s\S]+<\/title>/,"missing <title>"]]; for (const [re,msg] of checks) if (!re.test(lower)) { failed=true; console.error(`$${f}: $${msg}`); } const opened=(html.match(/<script\b[^>]*>/gi)||[]).length; const closed=(html.match(/<\/script>/gi)||[]).length; if (opened !== closed) { failed=true; console.error(`$${f}: unbalanced script tags`); } if (!failed) console.log(`$${f}: basic HTML checks passed`); } if (failed) process.exit(1);' $(HTML_FILES)
 
 beautify:
-	@$(NODE) tools/beautify-inline-js.mjs $(HTML_FILES)
+	@$(NODE) scripts/beautify-inline-js.mjs $(HTML_FILES)
 
 format: beautify
 

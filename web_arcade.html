@@ -210,8 +210,8 @@ function drawCircle(cx, cy, radius, r, g, b, fill = true) {
     let x = rr, y = 0, err = 1 - rr;
     while (x >= y) {
       const pts = [[x,y],[-x,y],[x,-y],[-x,-y],[y,x],[-y,x],[y,-x],[-y,-x]];
-      for (const [dx,dy] of pts) display.setPixel(Math.round(cx + dx), Math.round(cy + dy) {
-        , r, g, b);
+      for (const [dx,dy] of pts) {
+        display.setPixel(Math.round(cx + dx), Math.round(cy + dy), r, g, b);
       }
       y++;
       if (err < 0) {
@@ -258,8 +258,8 @@ function drawCenteredText(lines, startY = 18, lineH = 10, r = 255, g = 255, b = 
 function drawHud(score, extra = '') {
   drawRectangle(0, PLAY_HEIGHT, WIDTH - 1, HEIGHT - 1, 0, 0, 0);
   drawTextSmall(1, PLAY_HEIGHT, String(Math.floor(score || 0)).slice(0, 5), 255, 255, 255);
-  if (extra) drawTextSmall(WIDTH - String(extra).length * 6, PLAY_HEIGHT, String(extra) {
-    , 180, 180, 180);
+  if (extra) {
+    drawTextSmall(WIDTH - String(extra).length * 6, PLAY_HEIGHT, String(extra), 180, 180, 180);
   } else {
     const d = new Date();
     const t = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
@@ -458,8 +458,8 @@ class DemosGame extends BaseGame {
     this.mode = 0;
     this.t = 0;
     this.particles = [];
-    for (let i = 0; i < 42; i++) this.particles.push([Math.random()*WIDTH, Math.random()*HEIGHT, Math.random()*2-1, Math.random() {
-      *2-1, i*9]);
+    for (let i = 0; i < 42; i++) {
+      this.particles.push([Math.random()*WIDTH, Math.random()*HEIGHT, Math.random()*2-1, Math.random()*2-1, i*9]);
     }
   }
   update(dt, input) {
@@ -467,11 +467,11 @@ class DemosGame extends BaseGame {
       this.ended = true;
       return;
     }
-    if (input.justPressed('ArrowRight')) this.mode = (this.mode + 1) {
-      % 5;
+    if (input.justPressed('ArrowRight')) {
+      this.mode = (this.mode + 1)% 5;
     }
-    if (input.justPressed('ArrowLeft')) this.mode = (this.mode + 4) {
-      % 5;
+    if (input.justPressed('ArrowLeft')) {
+      this.mode = (this.mode + 4)% 5;
     }
     this.t += dt * 0.06;
     this.score = this.mode;
@@ -762,8 +762,8 @@ class AsteroidGame extends BaseGame {
     this.cool=0;
     this.shots=[];
     this.rocks=[];
-    for (let i=0;i<4;i++)this.rocks.push(this.newRock(true) {
-      );
+    for (let i=0;i<4;i++) {
+      this.rocks.push(this.newRock(true));
     }
     this.acc=0;
   }
@@ -843,8 +843,10 @@ class AsteroidGame extends BaseGame {
       this.end(this.score);
       return;
     }
-    if (!this.rocks.length)for (let i=0;i<4;i++)this.rocks.push(this.newRock(true) {
-      );
+    if (!this.rocks.length) {
+      for (let i=0;i<4;i++) {
+        this.rocks.push(this.newRock(true));
+      }
     }
   }
   draw() {
@@ -1410,8 +1412,8 @@ class Game2048 extends BaseGame {
     for (let i=0;i<16;i++)if (!this.grid[i]) {
       free.push(i);
     }
-    if (free.length)this.grid[choice(free)]=Math.random() {
-      <.1?4:2;
+    if (free.length) {
+      this.grid[choice(free)]=Math.random()<.1?4:2;
     }
   }
   compress(line) {
@@ -1433,8 +1435,8 @@ class Game2048 extends BaseGame {
     for (let i=0;i<4;i++) {
       let line=[];
       if (dir===0||dir===2) {
-        for (let y=0;y<4;y++)line.push(this.grid[this.idx(i,y) {
-          ]);
+        for (let y=0;y<4;y++) {
+          line.push(this.grid[this.idx(i,y)]);
         }
         if (dir===2) {
           line.reverse();
@@ -1452,8 +1454,8 @@ class Game2048 extends BaseGame {
           this.grid[k]=nl[y];
         }
       } else {
-        for (let x=0;x<4;x++)line.push(this.grid[this.idx(x,i) {
-          ]);
+        for (let x=0;x<4;x++) {
+          line.push(this.grid[this.idx(x,i)]);
         }
         if (dir===1) {
           line.reverse();
@@ -1607,8 +1609,8 @@ class MinesGame extends BaseGame {
           drawRectangle(px+2,py+2,px+4,py+4,255,0,0);
         } else {
           const n=this.count(x,y);
-          if (n)drawTextSmall(px+1,py,String(n) {
-            ,40+n*25,220,255-n*18);
+          if (n) {
+            drawTextSmall(px+1,py,String(n),40+n*25,220,255-n*18);
           }
         }
       } else drawRectangle(px,py,px+5,py+5,24,58,78);
@@ -1722,8 +1724,8 @@ class SokobanGame extends BaseGame {
         if (this.goals.has(k)) {
           drawRectangle(px+1,py+1,px+2,py+2,0,120,0);
         }
-        if (this.boxes.has(k))drawRectangle(px+1,py+1,px+2,py+2,this.goals.has(k)?255:220,this.goals.has(k) {
-          ?220:140,0);
+        if (this.boxes.has(k)) {
+          drawRectangle(px+1,py+1,px+2,py+2,this.goals.has(k)?255:220,this.goals.has(k)?220:140,0);
         }
       }
     }
@@ -1850,8 +1852,8 @@ class OthelloGame extends BaseGame {
       drawRectangle(px,py,px+5,py+5,0,90,0);
       drawRectOutline(px,py,px+5,py+5,0,60,0);
       const v=this.board[y][x];
-      if (v)drawCircle(px+3,py+3,2,...(v===1?[0,0,0]:[255,255,255]) {
-        );
+      if (v) {
+        drawCircle(px+3,py+3,2,...(v===1?[0,0,0]:[255,255,255]));
       }
     }
     drawRectOutline(this.ox+this.cx*this.C,this.oy+this.cy*this.C,this.ox+this.cx*this.C+5,this.oy+this.cy*this.C+5,255,255,0);
@@ -2361,8 +2363,8 @@ class LunarLanderGame extends BaseGame {
       const onPad=this.x>=this.padX&&this.x<this.padX+this.padW;
       const soft=Math.abs(this.vx)<.65&&Math.abs(this.vy)<1.2;
       const upright=Math.abs(((this.angle-90+180)%360)-180)<=25;
-      if (onPad&&soft&&upright)this.end(Math.floor(this.score+this.fuel+200) {
-        ,true);
+      if (onPad&&soft&&upright) {
+        this.end(Math.floor(this.score+this.fuel+200),true);
       } else this.end(Math.floor(this.score));
     }
   }
@@ -2509,8 +2511,8 @@ class ColumnsGame extends BaseGame {
     return x>=0&&x<this.COLS&&y+2<this.ROWS&&!this.grid[this.idx(x,y+2)];
   }
   lock() {
-    for (let i=0;i<3;i++)this.grid[this.idx(this.x,this.y+i) {
-      ]=this.gems[i];
+    for (let i=0;i<3;i++) {
+      this.grid[this.idx(this.x,this.y+i)]=this.gems[i];
     }
     this.resolve();
     this.spawn();
@@ -2545,8 +2547,8 @@ class ColumnsGame extends BaseGame {
           s.push(v);
         }
       }
-      for (let y=0;y<this.ROWS;y++)this.grid[this.idx(x,y)]= y<this.ROWS-s.length?0:s[y-(this.ROWS-s.length) {
-        ];
+      for (let y=0;y<this.ROWS;y++) {
+        this.grid[this.idx(x,y)]= y<this.ROWS-s.length?0:s[y-(this.ROWS-s.length)];
       }
     }
   }
@@ -2602,8 +2604,8 @@ class ColumnsGame extends BaseGame {
         drawRectangle(this.OX+x*this.C,this.OY+y*this.C,this.OX+x*this.C+2,this.OY+y*this.C+2,...this.palette[v]);
       }
     }
-    for (let i=0;i<3;i++)drawRectangle(this.OX+this.x*this.C,this.OY+(this.y+i)*this.C,this.OX+this.x*this.C+2,this.OY+(this.y+i) {
-      *this.C+2,...this.palette[this.gems[i]]);
+    for (let i=0;i<3;i++) {
+      drawRectangle(this.OX+this.x*this.C,this.OY+(this.y+i)*this.C,this.OX+this.x*this.C+2,this.OY+(this.y+i)*this.C+2,...this.palette[this.gems[i]]);
     }
     drawHud(this.score);
   }
@@ -3013,8 +3015,8 @@ class OrbitGame extends BaseGame {
   }
   draw() {
     display.clear();
-    for (const b of this.blobs)drawCircle(b.x,b.y,b.r,...(b.r<this.r?[70,220,160]:[255,80,80]) {
-      );
+    for (const b of this.blobs) {
+      drawCircle(b.x,b.y,b.r,...(b.r<this.r?[70,220,160]:[255,80,80]));
     }
     drawCircle(this.x,this.y,this.r,80,170,255);
     drawLine(this.x,this.y,this.x+Math.cos(this.aim)*(this.r+5),this.y+Math.sin(this.aim)*(this.r+5),255,255,255);
@@ -3039,8 +3041,8 @@ class GalaxyGame extends BaseGame {
     this.planets=[[8,29,4,0,22,2],[55,29,4,1,22+this.level*2,2]];
     while (this.planets.length<Math.min(10,5+this.level)) {
       const x=randInt(14,50),y=randInt(8,49);
-      if (this.planets.every(p=>dist2(p[0],p[1],x,y)>120))this.planets.push([x,y,randInt(2,4),-1,randInt(6,18) {
-        ,1]);
+      if (this.planets.every(p=>dist2(p[0],p[1],x,y)>120)) {
+        this.planets.push([x,y,randInt(2,4),-1,randInt(6,18),1]);
       }
     }
     this.fleets=[];
@@ -3146,8 +3148,8 @@ class GalaxyGame extends BaseGame {
   }
   draw() {
     display.clear();
-    for (const f of this.fleets)display.setPixel(f.x,f.y,...this.ownerColor(f.own) {
-      );
+    for (const f of this.fleets) {
+      display.setPixel(f.x,f.y,...this.ownerColor(f.own));
     }
     for (let i=0;i<this.planets.length;i++) {
       const p=this.planets[i];
@@ -3403,8 +3405,8 @@ class GolfGame extends BaseGame {
       drawRectangle(o[0],o[1],o[0]+o[2]-1,o[1]+o[3]-1,110,110,110);
     }
     drawRectangle(this.hx-2,this.hy-2,this.hx+2,this.hy+2,0,0,0);
-    if (!this.moving())drawLine(this.x+1,this.y+1,this.x+1+Math.cos(this.angle*Math.PI/180)*(this.power+3),this.y+1+Math.sin(this.angle*Math.PI/180)*(this.power+3) {
-      ,255,255,0);
+    if (!this.moving()) {
+      drawLine(this.x+1,this.y+1,this.x+1+Math.cos(this.angle*Math.PI/180)*(this.power+3),this.y+1+Math.sin(this.angle*Math.PI/180)*(this.power+3),255,255,0);
     }
     drawRectangle(this.x,this.y,this.x+1,this.y+1,255,255,255);
     drawHud(this.score,'H'+this.hole);
@@ -3566,12 +3568,12 @@ class BilliardsGame extends BaseGame {
     for (const p of [[2,4],[61,4],[2,PLAY_HEIGHT-3],[61,PLAY_HEIGHT-3]]) {
       drawCircle(p[0],p[1],3,0,0,0);
     }
-    for (const b of this.balls)drawCircle(b.x,b.y,2,...hsbToRgb(b.h,1,1) {
-      );
+    for (const b of this.balls) {
+      drawCircle(b.x,b.y,2,...hsbToRgb(b.h,1,1));
     }
     drawCircle(this.cue.x,this.cue.y,2,245,245,245);
-    if (!this.moving())drawLine(this.cue.x,this.cue.y,this.cue.x+Math.cos(this.aim)*9,this.cue.y+Math.sin(this.aim) {
-      *9,255,230,90);
+    if (!this.moving()) {
+      drawLine(this.cue.x,this.cue.y,this.cue.x+Math.cos(this.aim)*9,this.cue.y+Math.sin(this.aim)*9,255,230,90);
     }
     drawHud(this.score,'L'+this.level);
   }
@@ -3803,8 +3805,12 @@ class CgolgGame extends BaseGame {
   }
   live(x,y) {
     let n=0;
-    for (let yy=-1;yy<=1;yy++)for (let xx=-1;xx<=1;xx++)if (xx||yy)n+=this.grid[mod(y+yy,this.H)][mod(x+xx,this.W) {
-      ];
+    for (let yy=-1;yy<=1;yy++) {
+      for (let xx=-1;xx<=1;xx++) {
+        if (xx||yy) {
+          n+=this.grid[mod(y+yy,this.H)][mod(x+xx,this.W)];
+        }
+      }
     }
     return n;
   }
@@ -3837,8 +3843,10 @@ class CgolgGame extends BaseGame {
     if (d===JOYSTICK_RIGHT) {
       this.cx=mod(this.cx+1,this.W);
     }
-    if (input.actionPressed())for (const [x,y] of [[0,0],[1,0],[-1,0],[0,1],[1,1]])this.grid[mod(this.cy+y,this.H)][mod(this.cx+x,this.W) {
-      ]=1;
+    if (input.actionPressed()) {
+      for (const [x,y] of [[0,0],[1,0],[-1,0],[0,1],[1,1]]) {
+        this.grid[mod(this.cy+y,this.H)][mod(this.cx+x,this.W)]=1;
+      }
     }
     this.acc+=dt;
     if (this.acc>220) {
@@ -4075,63 +4083,72 @@ class KeenGame extends BaseGame {
     this.reset();
   }
   reset() {
-    this.x=4;
-    this.y=44;
-    this.vy=0;
-    this.score=0;
-    this.gems=Array.from({ length:8 },()=>({ x:randInt(10,60),y:randInt(12,45) }));
-    this.en=[{ x:40,y:47,d:1 } ];
+    this.x = 4;
+    this.y = 44;
+    this.vy = 0;
+    this.score = 0;
+    this.gems = Array.from({ length: 8 }, () => ({
+      x: randInt(10, 60),
+      y: randInt(12, 45),
+    }));
+    this.en = [{ x: 40, y: 47, d: 1 }];
   }
   ground(x) {
-    return x>24&&x<38?42:50;
+    return x > 24 && x < 38 ? 42 : 50;
   }
-  update(dt,input) {
+  update(dt, input) {
     if (input.backPressed()) {
-      this.ended=true;
+      this.ended = true;
       return;
     }
-    const d=input.readDirection([JOYSTICK_LEFT,JOYSTICK_RIGHT,JOYSTICK_UP],false);
-    if (d===JOYSTICK_LEFT) {
-      this.x=Math.max(1,this.x-2);
+    const d = input.readDirection([JOYSTICK_LEFT, JOYSTICK_RIGHT, JOYSTICK_UP], false);
+    if (d === JOYSTICK_LEFT) {
+      this.x = Math.max(1, this.x - 2);
     }
-    if (d===JOYSTICK_RIGHT) {
-      this.x=Math.min(61,this.x+2);
+    if (d === JOYSTICK_RIGHT) {
+      this.x = Math.min(61, this.x + 2);
     }
-    if ((d===JOYSTICK_UP||input.actionPressed())&&this.y+4>=this.ground(this.x)) {
-      this.vy=-6;
+    if ((d === JOYSTICK_UP || input.actionPressed()) && this.y + 4 >= this.ground(this.x)) {
+      this.vy = -6;
     }
-    this.vy+=.45;
-    this.y+=this.vy;
-    if (this.y+4>=this.ground(this.x)) {
-      this.y=this.ground(this.x)-4;
-      this.vy=0;
+    this.vy += 0.45;
+    this.y += this.vy;
+    if (this.y + 4 >= this.ground(this.x)) {
+      this.y = this.ground(this.x) - 4;
+      this.vy = 0;
     }
     for (const e of this.en) {
-      e.x+=e.d;
-      if (e.x<28||e.x>58) {
-        e.d*=-1;
+      e.x += e.d;
+      if (e.x < 28 || e.x > 58) {
+        e.d *= -1;
       }
-      if (rectsOverlap(this.x,this.y,3,4,e.x,e.y,4,3)) {
+      if (rectsOverlap(this.x, this.y, 3, 4, e.x, e.y, 4, 3)) {
         this.end(this.score);
         return;
       }
     }
-    this.gems=this.gems.filter(g=> { if (rectsOverlap(this.x,this.y,3,4,g.x,g.y,2,2)) { this.score+=10;return false; } return true; });
+    this.gems = this.gems.filter(g => {
+      if (rectsOverlap(this.x, this.y, 3, 4, g.x, g.y, 2, 2)) {
+        this.score += 10;
+        return false;
+      }
+      return true;
+    });
     if (!this.gems.length) {
-      this.end(this.score+100,true);
+      this.end(this.score + 100, true);
     }
   }
   draw() {
     display.clear();
-    drawRectangle(0,50,63,PLAY_HEIGHT-1,70,45,120);
-    drawRectangle(25,42,37,44,70,45,120);
+    drawRectangle(0, 50, 63, PLAY_HEIGHT - 1, 70, 45, 120);
+    drawRectangle(25, 42, 37, 44, 70, 45, 120);
     for (const g of this.gems) {
-      drawRectangle(g.x,g.y,g.x+1,g.y+1,0,255,180);
+      drawRectangle(g.x, g.y, g.x + 1, g.y + 1, 0, 255, 180);
     }
     for (const e of this.en) {
-      drawRectangle(e.x,e.y,e.x+3,e.y+2,255,80,0);
+      drawRectangle(e.x, e.y, e.x + 3, e.y + 2, 255, 80, 0);
     }
-    drawRectangle(this.x,this.y,this.x+2,this.y+3,255,230,80);
+    drawRectangle(this.x, this.y, this.x + 2, this.y + 3, 255, 230, 80);
     drawHud(this.score);
   }
 }
@@ -4238,25 +4255,31 @@ class PitfallGame extends BaseGame {
     this.world=0;
     this.obs=[];
     this.spawn=0;
+    this.acc=0;
   }
   update(dt,input) {
     if (input.backPressed()) {
       this.ended=true;
       return;
     }
-    this.spawn-=dt;
-    if (this.spawn<=0) {
-      this.spawn=randInt(550,900);
-      this.obs.push({ x:70,type:Math.random()<.55?'pit':'log' });
-    }
     const d=input.readDirection([JOYSTICK_UP],false);
     if ((d===JOYSTICK_UP||input.actionPressed())&&this.y>=44) {
-      this.vy=-6;
+      this.vy=-5.2;
     }
-    this.vy+=.45;
+    this.acc+=dt;
+    if (this.acc<45) {
+      return;
+    }
+    this.acc-=45;
+    this.spawn-=45;
+    if (this.spawn<=0) {
+      this.spawn=randInt(1000,1600);
+      this.obs.push({ x:70,type:Math.random()<.55?'pit':'log' });
+    }
+    this.vy+=.34;
     this.y=Math.min(44,this.y+this.vy);
     for (const o of this.obs) {
-      o.x-=2;
+      o.x-=1;
     }
     this.obs=this.obs.filter(o=>o.x>-12);
     for (const o of this.obs) {
@@ -4296,6 +4319,7 @@ class QixGame extends BaseGame {
     this.trail=[];
     this.drawMode=false;
     this.q={ x:35,y:25,vx:1.2,vy:.9 };
+    this.acc=0;
   }
   edge() {
     return this.x===1||this.x===62||this.y===1||this.y===PLAY_HEIGHT-2;
@@ -4305,6 +4329,11 @@ class QixGame extends BaseGame {
       this.ended=true;
       return;
     }
+    this.acc+=dt;
+    if (this.acc<45) {
+      return;
+    }
+    this.acc-=45;
     const d=input.readDirection([JOYSTICK_UP,JOYSTICK_DOWN,JOYSTICK_LEFT,JOYSTICK_RIGHT],false);
     const [dx,dy]=directionToDelta(d);
     this.x=clamp(this.x+dx,1,62);
@@ -4359,12 +4388,18 @@ class RayRacerGame extends BaseGame {
     this.score=0;
     this.cars=[];
     this.spawn=0;
+    this.acc=0;
   }
   update(dt,input) {
     if (input.backPressed()) {
       this.ended=true;
       return;
     }
+    this.acc+=dt;
+    if (this.acc<45) {
+      return;
+    }
+    this.acc-=45;
     const d=input.readDirection([JOYSTICK_LEFT,JOYSTICK_RIGHT,JOYSTICK_UP,JOYSTICK_DOWN],false);
     if (d===JOYSTICK_LEFT) {
       this.x-=2;
@@ -4373,17 +4408,17 @@ class RayRacerGame extends BaseGame {
       this.x+=2;
     }
     if (d===JOYSTICK_UP||input.action()) {
-      this.speed=Math.min(3,this.speed+.08);
-    } else this.speed=Math.max(1,this.speed-.03);
+      this.speed=Math.min(2.4,this.speed+.05);
+    } else this.speed=Math.max(.75,this.speed-.025);
     this.curve+=Math.sin(this.score*.01)*.03;
     this.x-=this.curve*this.speed;
-    this.spawn-=dt;
+    this.spawn-=45;
     if (this.spawn<=0) {
       this.spawn=850;
       this.cars.push({ x:randInt(20,44),z:0 });
     }
     for (const c of this.cars) {
-      c.z+=.025*this.speed;
+      c.z+=.014*this.speed;
     }
     this.cars=this.cars.filter(c=>c.z<1.2);
     for (const c of this.cars) {
@@ -4424,12 +4459,18 @@ class SaboteurGame extends BaseGame {
     this.score=0;
     this.keys=Array.from({ length:5 },()=>({ x:randInt(10,58),y:randInt(10,48) }));
     this.guards=[{ x:30,y:18,d:1 }, { x:48,y:38,d:-1 } ];
+    this.acc=0;
   }
   update(dt,input) {
     if (input.backPressed()) {
       this.ended=true;
       return;
     }
+    this.acc+=dt;
+    if (this.acc<60) {
+      return;
+    }
+    this.acc-=60;
     const d=input.readDirection([JOYSTICK_UP,JOYSTICK_DOWN,JOYSTICK_LEFT,JOYSTICK_RIGHT],false);
     const [dx,dy]=directionToDelta(d);
     this.x=clamp(this.x+dx*2,1,61);
@@ -4473,6 +4514,12 @@ class SoccerGame extends BaseGame {
     this.reset();
   }
   reset() {
+    this.score=0;
+    this.opp=0;
+    this.acc=0;
+    this.serve();
+  }
+  serve() {
     this.px=18;
     this.py=29;
     this.ax=46;
@@ -4481,14 +4528,17 @@ class SoccerGame extends BaseGame {
     this.by=29;
     this.vx=0;
     this.vy=0;
-    this.score=0;
-    this.opp=0;
   }
   update(dt,input) {
     if (input.backPressed()) {
       this.ended=true;
       return;
     }
+    this.acc+=dt;
+    if (this.acc<38) {
+      return;
+    }
+    this.acc-=38;
     const d=input.readDirection([JOYSTICK_UP,JOYSTICK_DOWN,JOYSTICK_LEFT,JOYSTICK_RIGHT],false);
     const [dx,dy]=directionToDelta(d);
     this.px=clamp(this.px+dx*2,2,61);
@@ -4515,16 +4565,14 @@ class SoccerGame extends BaseGame {
         this.end(this.score);
         return;
       }
-      this.reset();
+      this.serve();
     }
     if (this.bx>63&&this.by>23&&this.by<36) {
       this.score++;
       if (this.score>=3) {
         this.end(this.score*100,true);
       }
-      this.bx=32;
-      this.by=29;
-      this.vx=this.vy=0;
+      this.serve();
     }
     this.bx=clamp(this.bx,0,63);
   }
@@ -4557,6 +4605,7 @@ class TowerDefenseGame extends BaseGame {
     this.spawn=0;
     this.left=8;
     this.lives=5;
+    this.acc=0;
   }
   pathY(x) {
     return 10+Math.floor(Math.sin(x*.16)*12)+20;
@@ -4583,17 +4632,22 @@ class TowerDefenseGame extends BaseGame {
       this.score-=25;
       this.towers.push({ x:this.cx,y:this.cy,cool:0 });
     }
-    this.spawn-=dt;
+    this.acc+=dt;
+    if (this.acc<40) {
+      return;
+    }
+    this.acc-=40;
+    this.spawn-=40;
     if (this.left>0&&this.spawn<=0) {
       this.spawn=Math.max(250,700-this.wave*35);
       this.left--;
       this.en.push({ x:-4,hp:2+Math.floor(this.wave/2) });
     }
     for (const e of this.en) {
-      e.x+=.45+this.wave*.03;
+      e.x+=.32+this.wave*.025;
     }
     for (const t of this.towers) {
-      t.cool-=dt;
+      t.cool-=40;
       if (t.cool<=0) {
         const tx=t.x*8+4,ty=t.y*8+7;
         let target=null,best=999;
@@ -4634,8 +4688,8 @@ class TowerDefenseGame extends BaseGame {
     for (const t of this.towers) {
       drawRectangle(t.x*8+2,t.y*8+5,t.x*8+6,t.y*8+9,0,180,255);
     }
-    for (const e of this.en)drawRectangle(e.x-2,this.pathY(e.x)-2,e.x+2,this.pathY(e.x) {
-      +2,255,70,50);
+    for (const e of this.en) {
+      drawRectangle(e.x-2,this.pathY(e.x)-2,e.x+2,this.pathY(e.x)+2,255,70,50);
     }
     drawRectOutline(this.cx*8+1,this.cy*8+4,this.cx*8+7,this.cy*8+10,255,255,255);
     drawHud(this.score,'W'+this.wave+' L'+this.lives);
